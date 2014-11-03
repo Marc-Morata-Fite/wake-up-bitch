@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>IP</td>
+            <td>MAC</td>
+            <td>Owner</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+    <% leases.each do |lease| %>
+        <tr>
+            <td><%= lease[0] %></td>
+            <td><%= lease[1] %></td>
+            <td><%= lease[2] %></td>
+            <td>
+                <form action="/wake_up/<%= lease[1] %>" method="post">
+                    <input name="_method" type="hidden" value="wakeup">
+                    <input name="commit" type="submit" value="Wake Up!">
+                </form>
+            </td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
