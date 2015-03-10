@@ -1,7 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mime-types (2.4.3)
     mini_portile (0.6.0)
+    netrc (0.10.3)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     puma (2.9.2)
@@ -9,6 +11,9 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    rest-client (1.7.3)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -21,4 +26,5 @@ PLATFORMS
 DEPENDENCIES
   nokogiri
   puma
+  rest-client
   sinatra

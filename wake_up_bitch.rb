@@ -1,5 +1,6 @@
 require 'nokogiri'
-require 'open-uri'
+require 'openssl'
+require 'rest_client'
 require 'net/https'
 require 'rubygems'
 require "sinatra"
@@ -13,7 +14,14 @@ def get_data(credentials)
 end
 
 get '/' do
-    page  = Nokogiri::HTML(open("https://10.60.1.4:8443/dhcp/10.60.1.0", :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
+    cert = OpenSSL::X509::Certificate.new(File.read './cert/wakeupbitch.bcn.abiquo.com.pem')
+    key = OpenSSL::PKey::RSA.new(File.read './cert/wakeupbitch.bcn.abiquo.com.key')
+    cli = RestClient::Resource.new('https://ruido.bcn.abiquo.com:8443/dhcp/10.60.1.0', 
+                                    :ssl_client_cert => cert, 
+                                    :ssl_client_key => key, 
+                                    :verify_ssl => OpenSSL::SSL::VERIFY_NONE )
+    page = Nokogiri::HTML.parse(cli.get)
+
     leases = []
     records = page.css("table").first
     records.css("tr").each do |lease|
