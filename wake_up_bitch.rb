@@ -37,6 +37,6 @@ end
 
 post '/wake_up/:mac' do
     mac = params[:mac]
-    puts `wakeonlan #{mac}` 
+    puts `wol #{mac}`
     redirect '/'
 end
